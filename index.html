@@ -546,6 +546,55 @@ td{padding:0;vertical-align:middle}
 ::-webkit-scrollbar{width:4px;height:4px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:var(--bd3);border-radius:2px}
+
+/* ── SEARCH ── */
+.search-wrap{margin-bottom:20px}
+.search-box-wrap{position:relative}
+.search-input{
+  width:100%;
+  background:var(--sf);
+  border:1px solid var(--bd2);
+  border-radius:var(--r-md);
+  color:var(--t1);
+  font-family:var(--font);font-size:14px;font-weight:500;
+  padding:12px 14px 12px 42px;
+  transition:border-color .18s,box-shadow .18s,background var(--tr);
+}
+.search-input::placeholder{color:var(--t3)}
+.search-input:focus{outline:none;border-color:var(--ac);box-shadow:0 0 0 3px var(--ac-ring)}
+.search-ico{
+  position:absolute;left:14px;top:50%;transform:translateY(-50%);
+  color:var(--t3);pointer-events:none;line-height:1;
+}
+.search-results{
+  position:absolute;top:calc(100% + 6px);left:0;right:0;
+  background:var(--sf);
+  border:1px solid var(--bd2);
+  border-radius:var(--r-md);
+  z-index:100;
+  max-height:260px;overflow-y:auto;
+  display:none;
+  box-shadow:0 8px 28px rgba(0,0,0,.18);
+  transition:background var(--tr),border-color var(--tr);
+}
+.sri{
+  padding:10px 14px;cursor:pointer;
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  border-bottom:1px solid var(--bd);
+}
+.sri:last-child{border-bottom:none}
+.sri:hover,.sri:focus{background:var(--sf2);outline:none}
+.sri-name{font-size:13px;font-weight:600;color:var(--t1)}
+.sri-meta{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.sri-region{font-size:10px;color:var(--t2);font-family:var(--mono);text-transform:uppercase;letter-spacing:.06em}
+.search-empty{padding:16px 14px;font-size:13px;color:var(--t2);text-align:center}
+.search-divider{
+  display:flex;align-items:center;gap:12px;
+  margin:0 0 16px;
+  color:var(--t3);font-size:10px;font-family:var(--mono);
+  text-transform:uppercase;letter-spacing:.10em;
+}
+.search-divider::before,.search-divider::after{content:'';flex:1;height:1px;background:var(--bd)}
 </style>
 </head>
 <body>
@@ -595,6 +644,18 @@ td{padding:0;vertical-align:middle}
     <div class="group-card-desc">Sat: 6am, then 6pm next day</div>
   </div>
 </div>
+
+<div class="search-wrap">
+  <div class="field">
+    <label class="field-label" for="sq">Search your area</label>
+    <div class="search-box-wrap">
+      <svg class="search-ico" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5l4 4"/></svg>
+      <input type="text" id="sq" class="search-input" placeholder="e.g. East Legon, Kumasi, Takoradi…" autocomplete="off" spellcheck="false" />
+      <div class="search-results" id="search-results"></div>
+    </div>
+  </div>
+</div>
+<div class="search-divider"><span>or browse by region</span></div>
 
 <div class="selectors">
   <div class="field">
@@ -1046,6 +1107,74 @@ function render(district, region, g){
   el.style.display = 'block';
   el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
+
+/* ── SEARCH ── */
+const SEARCH_INDEX = [];
+for(const [region, districts] of Object.entries(D)){
+  const regionLabel = region.charAt(0).toUpperCase() + region.slice(1);
+  for(const d of districts) SEARCH_INDEX.push({n:d.n, g:d.g, region, regionLabel});
+}
+
+let _searchMatches = [];
+
+function onSearch(){
+  const q = document.getElementById('sq').value.trim().toLowerCase();
+  const box = document.getElementById('search-results');
+  if(!q){ box.style.display='none'; return; }
+
+  _searchMatches = SEARCH_INDEX.filter(d => d.n.toLowerCase().includes(q)).slice(0, 10);
+
+  if(!_searchMatches.length){
+    box.innerHTML = '<div class="search-empty">No matching areas found</div>';
+    box.style.display = 'block';
+    return;
+  }
+
+  box.innerHTML = _searchMatches.map((d, i) => `
+    <div class="sri" role="option" tabindex="-1" data-idx="${i}">
+      <span class="sri-name">${d.n}</span>
+      <span class="sri-meta">
+        <span class="sri-region">${d.regionLabel}</span>
+        <span class="grp-pill grp-${d.g}" style="padding:3px 9px 3px 7px;font-size:11px"><span class="grp-dot"></span>Grp ${d.g}</span>
+      </span>
+    </div>`).join('');
+  box.style.display = 'block';
+}
+
+function selectSearchResult(d){
+  document.getElementById('sq').value = '';
+  document.getElementById('search-results').style.display = 'none';
+  const sr = document.getElementById('sr');
+  sr.value = d.region;
+  onRegion();
+  const sd = document.getElementById('sd');
+  for(const opt of sd.options){ if(opt.value === d.n){ sd.value = d.n; break; } }
+  render(d.n, sr.options[sr.selectedIndex].text, d.g);
+}
+
+document.getElementById('search-results').addEventListener('click', e => {
+  const item = e.target.closest('.sri');
+  if(item) selectSearchResult(_searchMatches[+item.dataset.idx]);
+});
+
+document.getElementById('sq').addEventListener('input', onSearch);
+
+document.getElementById('sq').addEventListener('keydown', e => {
+  const box = document.getElementById('search-results');
+  const items = box.querySelectorAll('.sri');
+  if(!items.length) return;
+  const focused = box.querySelector('.sri:focus');
+  const idx = focused ? [...items].indexOf(focused) : -1;
+  if(e.key === 'ArrowDown'){ e.preventDefault(); (items[idx+1]||items[0]).focus(); }
+  else if(e.key === 'ArrowUp'){ e.preventDefault(); (items[idx-1]||items[items.length-1]).focus(); }
+  else if(e.key === 'Enter' && focused){ selectSearchResult(_searchMatches[+focused.dataset.idx]); }
+  else if(e.key === 'Escape'){ box.style.display='none'; }
+});
+
+document.addEventListener('click', e => {
+  if(!e.target.closest('.search-box-wrap'))
+    document.getElementById('search-results').style.display = 'none';
+});
 
 </script>
 </body>
