@@ -595,6 +595,38 @@ td{padding:0;vertical-align:middle}
   text-transform:uppercase;letter-spacing:.10em;
 }
 .search-divider::before,.search-divider::after{content:'';flex:1;height:1px;background:var(--bd)}
+
+/* ── DISCLAIMER ── */
+.disclaimer{
+  background:var(--sf2);
+  border:1px solid var(--bd2);
+  border-radius:var(--r-lg);
+  padding:14px 18px;
+  margin-bottom:28px;
+  font-size:12px;
+  color:var(--t2);
+  line-height:1.7;
+}
+.disclaimer strong{color:var(--t1);font-weight:600}
+.disclaimer a{color:var(--ac);text-decoration:none;font-weight:500}
+.disclaimer a:hover{opacity:.75}
+
+/* ── DOWNLOAD BUTTON ── */
+.dl-btn{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:8px 16px;
+  border-radius:var(--r-md);
+  background:var(--ac-dim);
+  border:1px solid rgba(245,166,35,0.25);
+  color:var(--ac);
+  font-family:var(--font);font-size:13px;font-weight:600;
+  text-decoration:none;
+  transition:background .18s,border-color .18s,opacity .15s;
+  white-space:nowrap;align-self:flex-start;
+}
+.dl-btn:hover{background:rgba(245,166,35,0.18);border-color:rgba(245,166,35,0.4)}
+[data-theme="light"] .dl-btn{border-color:rgba(201,125,10,0.22)}
+.dl-icon{font-size:14px;line-height:1}
 </style>
 </head>
 <body>
@@ -645,6 +677,10 @@ td{padding:0;vertical-align:middle}
   </div>
 </div>
 
+<div class="disclaimer">
+  <strong>Heads up —</strong> This site is an open-source project built to make a PDF schedule easier to read. The data is taken directly from an official-looking ECG timetable that was shared online, but it has <strong>not been independently verified</strong>. If your area doesn't show up in the search or dropdown, your community may be listed under a different name in the original document. <a href="ecg-load-management-2026.pdf" download>Download the original PDF</a> to check manually. Always confirm with ECG for the most accurate information.
+</div>
+
 <div class="search-wrap">
   <div class="field">
     <label class="field-label" for="sq">Search your area</label>
@@ -683,14 +719,16 @@ td{padding:0;vertical-align:middle}
 
 <footer class="footer">
   <div>
-    <p class="footer-note">Source: ECG 800MW Load Management Timetable, April–May 2026.<br>Data from official schedule. Always verify with ECG for changes.</p>
+    <p class="footer-note">Data sourced from an ECG 800MW Load Management timetable shared online, Apr–May 2026.<br>This is an open-source tool — not an official ECG product. Always verify with ECG.</p>
     <p class="footer-credit">Built by <strong>Sankwan</strong> &nbsp;·&nbsp;
       <a class="footer-link" href="https://wa.me/233557889480" target="_blank" rel="noopener">WhatsApp</a>
       &nbsp;·&nbsp;
       <a class="footer-link" href="https://jeaptech.vercel.app/" target="_blank" rel="noopener">jeaptech.vercel.app</a>
     </p>
   </div>
-  <span class="footer-stamp">Apr 2026</span>
+  <a class="dl-btn" href="ecg-load-management-2026.pdf" download>
+    <span class="dl-icon">⬇</span> Original PDF
+  </a>
 </footer>
 
 </div>
