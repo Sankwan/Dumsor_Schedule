@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Dumsor Schedule — Ghana Load Management 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --r-sm:6px;--r-md:10px;--r-lg:14px;--r-xl:18px;
+  --font:'Plus Jakarta Sans',system-ui,sans-serif;
+  --mono:'JetBrains Mono',monospace;
+  --tr:0.2s ease;
+  --max:820px;
+}
+
+/* ── DARK THEME ── */
+[data-theme="dark"]{
+  --bg:#0c0c10;
+  --sf:#141418;
+  --sf2:#1a1a20;
+  --sf3:#202028;
+  --bd:rgba(255,255,255,0.06);
+  --bd2:rgba(255,255,255,0.10);
+  --bd3:rgba(255,255,255,0.15);
+  --t1:#f0f0f8;
+  --t2:#8888a8;
+  --t3:#44445a;
+  --ac:#f5a623;
+  --ac2:#ffc142;
+  --ac-ring:rgba(245,166,35,0.25);
+  --ac-dim:rgba(245,166,35,0.10);
+  /* OFF = power cut */
+  --off-bg:rgba(239,68,68,0.10);
+  --off-bd:rgba(239,68,68,0.22);
+  --off-t:#f87171;
+  --off-t-strong:#fca5a5;
+  /* ON = power active */
+  --on-bg:rgba(255,255,255,0.025);
+  --on-bd:rgba(255,255,255,0.05);
+  --on-t:#33334a;
+  /* Group pills */
+  --A-bg:rgba(245,166,35,0.10);--A-bd:rgba(245,166,35,0.25);--A-t:#f5a623;
+  --B-bg:rgba(56,189,248,0.10);--B-bd:rgba(56,189,248,0.25);--B-t:#38bdf8;
+  --C-bg:rgba(167,139,250,0.10);--C-bd:rgba(167,139,250,0.25);--C-t:#a78bfa;
+  --tog-bg:#1a1a20;
+  --tog-active:#242430;
+  --hero-em:var(--ac);
+  --chip-bg:#141418;
+}
+
+/* ── LIGHT THEME ── */
+[data-theme="light"]{
+  --bg:#f6f5f0;
+  --sf:#ffffff;
+  --sf2:#f0efe9;
+  --sf3:#e8e7e0;
+  --bd:rgba(0,0,0,0.07);
+  --bd2:rgba(0,0,0,0.11);
+  --bd3:rgba(0,0,0,0.16);
+  --t1:#18181e;
+  --t2:#68687a;
+  --t3:#b0b0be;
+  --ac:#c97d0a;
+  --ac2:#e8920c;
+  --ac-ring:rgba(201,125,10,0.20);
+  --ac-dim:rgba(201,125,10,0.08);
+  /* OFF */
+  --off-bg:rgba(220,38,38,0.06);
+  --off-bd:rgba(220,38,38,0.18);
+  --off-t:#b91c1c;
+  --off-t-strong:#991b1b;
+  /* ON */
+  --on-bg:rgba(0,0,0,0.02);
+  --on-bd:rgba(0,0,0,0.06);
+  --on-t:#c8c8d8;
+  /* Group pills */
+  --A-bg:rgba(201,125,10,0.08);--A-bd:rgba(201,125,10,0.22);--A-t:#9a5c00;
+  --B-bg:rgba(2,132,199,0.07);--B-bd:rgba(2,132,199,0.20);--B-t:#075985;
+  --C-bg:rgba(124,58,237,0.07);--C-bd:rgba(124,58,237,0.18);--C-t:#5b21b6;
+  --tog-bg:#e8e7e0;
+  --tog-active:#ffffff;
+  --hero-em:var(--ac2);
+  --chip-bg:#ffffff;
+}
+
+body{
+  background:var(--bg);
+  color:var(--t1);
+  font-family:var(--font);
+  font-size:15px;
+  line-height:1.6;
+  min-height:100vh;
+  transition:background var(--tr),color var(--tr);
+  -webkit-font-smoothing:antialiased;
+}
+
+.page{max-width:var(--max);margin:0 auto;padding:0 18px 72px;}
+
+/* ── TOPBAR ── */
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:20px 0 0;margin-bottom:40px;gap:10px;flex-wrap:wrap;
+}
+.brand{display:flex;align-items:center;gap:9px}
+.brand-pulse{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--ac);
+  animation:breathe 2.6s ease-in-out infinite;
+  flex-shrink:0;
+}
+@keyframes breathe{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.65)}}
+.brand-name{
+  font-size:12px;font-weight:700;letter-spacing:.08em;
+  color:var(--t2);text-transform:uppercase;
+}
+
+.topbar-right{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+
+.live-chip{
+  display:flex;align-items:center;gap:6px;
+  padding:5px 12px;border-radius:24px;
+  border:1px solid var(--bd2);
+  background:var(--chip-bg);
+  font-family:var(--mono);font-size:11px;
+  color:var(--t2);white-space:nowrap;
+  transition:background var(--tr),border-color var(--tr);
+}
+.live-chip b{color:var(--t1);font-weight:500}
+
+.theme-toggle{
+  display:flex;align-items:center;
+  background:var(--tog-bg);
+  border-radius:24px;padding:3px;
+  border:1px solid var(--bd2);
+  gap:2px;
+  transition:background var(--tr);
+}
+.tbtn{
+  width:30px;height:26px;border-radius:20px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;cursor:pointer;border:none;
+  background:transparent;
+  transition:background .15s,color .15s;
+  color:var(--t3);
+}
+.tbtn.active{
+  background:var(--tog-active);
+  color:var(--t1);
+  box-shadow:0 1px 3px rgba(0,0,0,.12);
+}
+
+/* ── HERO ── */
+.hero{margin-bottom:32px}
+.hero-title{
+  font-size:clamp(30px,7vw,50px);
+  font-weight:800;
+  line-height:1.08;
+  letter-spacing:-.03em;
+  margin-bottom:12px;
+}
+.hero-title em{font-style:normal;color:var(--hero-em)}
+.hero-sub{
+  font-size:14px;color:var(--t2);
+  line-height:1.7;max-width:480px;
+}
+.hero-sub strong{color:var(--t1);font-weight:600}
+
+/* ── ALERT BANNER ── */
+.alert-banner{
+  display:flex;align-items:flex-start;gap:10px;
+  background:var(--ac-dim);
+  border:1px solid rgba(245,166,35,0.20);
+  border-radius:var(--r-lg);
+  padding:12px 16px;
+  margin-bottom:28px;
+  font-size:13px;
+  color:var(--t1);
+}
+.alert-icon{font-size:14px;flex-shrink:0;margin-top:1px}
+[data-theme="light"] .alert-banner{border-color:rgba(201,125,10,0.18)}
+
+/* ── SELECTORS ── */
+.selectors{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:28px}
+@media(max-width:480px){.selectors{grid-template-columns:1fr}}
+
+.field{display:flex;flex-direction:column;gap:6px}
+.field-label{
+  font-family:var(--mono);font-size:10px;
+  text-transform:uppercase;letter-spacing:.12em;
+  color:var(--t2);font-weight:500;
+}
+select{
+  appearance:none;width:100%;
+  background:var(--sf);
+  border:1px solid var(--bd2);
+  border-radius:var(--r-md);
+  color:var(--t1);
+  font-family:var(--font);font-size:14px;font-weight:500;
+  padding:12px 40px 12px 14px;
+  cursor:pointer;
+  transition:border-color .18s,box-shadow .18s,background var(--tr);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238888a8' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 14px center;
+}
+select:focus{outline:none;border-color:var(--ac);box-shadow:0 0 0 3px var(--ac-ring)}
+select:disabled{opacity:.3;cursor:not-allowed}
+select option{background:var(--sf);color:var(--t1)}
+
+/* ── ANSWER CARD ── */
+#answer{display:none;animation:rise .28s cubic-bezier(.2,.8,.3,1)}
+@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+.answer-card{
+  background:var(--sf);
+  border:1px solid var(--bd2);
+  border-radius:var(--r-xl);
+  overflow:hidden;
+  margin-bottom:24px;
+  transition:background var(--tr),border-color var(--tr);
+}
+
+/* Location strip */
+.loc-strip{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 20px;border-bottom:1px solid var(--bd);
+  gap:12px;flex-wrap:wrap;
+}
+.loc-name{font-size:16px;font-weight:700;color:var(--t1)}
+.loc-region{
+  font-size:11px;color:var(--t2);
+  font-family:var(--mono);margin-top:2px;
+  text-transform:uppercase;letter-spacing:.06em;
+}
+
+.grp-pill{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:5px 13px 5px 9px;
+  border-radius:20px;
+  font-family:var(--mono);font-size:12px;font-weight:600;
+  border:1px solid;flex-shrink:0;
+  transition:background var(--tr),color var(--tr),border-color var(--tr);
+}
+.grp-A{background:var(--A-bg);border-color:var(--A-bd);color:var(--A-t)}
+.grp-B{background:var(--B-bg);border-color:var(--B-bd);color:var(--B-t)}
+.grp-C{background:var(--C-bg);border-color:var(--C-bd);color:var(--C-t)}
+.grp-dot{width:6px;height:6px;border-radius:50%;background:currentColor}
+
+/* Status hero */
+.next-hero{padding:22px 20px 20px;border-bottom:1px solid var(--bd)}
+.eyebrow{
+  font-family:var(--mono);font-size:10px;
+  text-transform:uppercase;letter-spacing:.14em;
+  color:var(--t2);margin-bottom:8px;font-weight:500;
+}
+.next-row{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.next-big{
+  font-size:clamp(24px,5vw,38px);
+  font-weight:800;letter-spacing:-.03em;line-height:1.05;
+}
+.next-big.off{color:var(--off-t-strong)}
+[data-theme="dark"] .next-big.off{color:var(--off-t)}
+.next-big.on{color:var(--t1)}
+.next-sub{font-size:13px;color:var(--t2);margin-top:7px;line-height:1.65}
+.next-sub strong{color:var(--t1);font-weight:600}
+.next-tag{
+  font-family:var(--mono);font-size:11px;
+  padding:4px 12px;border-radius:20px;
+  border:1px solid var(--bd2);
+  color:var(--t2);white-space:nowrap;
+  align-self:flex-start;margin-top:2px;
+  background:var(--sf2);
+}
+
+/* Today slots — layout handled by .card-body-split grid */
+.section-label{
+  font-family:var(--mono);font-size:10px;
+  text-transform:uppercase;letter-spacing:.12em;
+  color:var(--t2);margin-bottom:12px;font-weight:500;
+}
+.slots-row{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+@media(max-width:420px){.slots-row{grid-template-columns:repeat(2,1fr)}}
+
+.slot-tile{
+  border-radius:var(--r-md);border:1px solid;
+  padding:11px 8px;display:flex;flex-direction:column;gap:4px;
+  position:relative;transition:background var(--tr),border-color var(--tr);
+}
+.slot-tile.off{background:var(--off-bg);border-color:var(--off-bd)}
+.slot-tile.on{background:var(--on-bg);border-color:var(--on-bd)}
+.slot-tile.now{
+  box-shadow:0 0 0 2px var(--ac);
+  border-color:var(--ac) !important;
+}
+.now-tag{
+  position:absolute;top:-8px;left:50%;transform:translateX(-50%);
+  background:var(--ac);color:#000;
+  font-family:var(--mono);font-size:9px;font-weight:700;
+  padding:2px 7px;border-radius:10px;letter-spacing:.05em;
+  white-space:nowrap;
+}
+.slot-time{font-family:var(--mono);font-size:9px;color:var(--t3);line-height:1.4}
+.slot-state{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase}
+.slot-tile.off .slot-state{color:var(--off-t)}
+.slot-tile.on .slot-state{color:var(--on-t)}
+
+/* Week table */
+.week-section{padding:18px 20px 24px}
+.week-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:var(--r-sm)}
+.week-scroll::-webkit-scrollbar{height:4px}
+.week-scroll::-webkit-scrollbar-track{background:transparent}
+.week-scroll::-webkit-scrollbar-thumb{background:var(--bd2);border-radius:2px}
+
+table{width:100%;border-collapse:collapse;table-layout:fixed;min-width:480px}
+thead th{
+  font-family:var(--mono);font-size:9px;
+  text-transform:uppercase;letter-spacing:.09em;
+  color:var(--t3);padding:0 8px 9px;
+  text-align:left;font-weight:500;white-space:nowrap;
+}
+thead th:first-child{width:86px}
+tbody tr{border-top:1px solid var(--bd)}
+tbody tr.today-row{background:var(--sf2)}
+td{padding:0;vertical-align:middle}
+.day-cell{padding:9px 8px !important;font-size:13px;font-weight:600;color:var(--t1);white-space:nowrap}
+.day-cell small{display:block;font-family:var(--mono);font-size:9px;font-weight:400;color:var(--t3);margin-top:1px}
+.today-badge{
+  display:inline-block;font-family:var(--mono);font-size:8px;font-weight:700;
+  padding:1px 5px;border-radius:5px;background:var(--ac);
+  color:#000;margin-left:5px;letter-spacing:.04em;vertical-align:middle;
+}
+.tcell{padding:7px 8px !important}
+.tcell.off{background:var(--off-bg)}
+.tcell.now{box-shadow:inset 0 0 0 1.5px var(--ac)}
+.tcell-txt{font-family:var(--mono);font-size:10px;font-weight:600;display:block;white-space:nowrap}
+.tcell.off .tcell-txt{color:var(--off-t)}
+.tcell.on .tcell-txt{color:var(--on-t)}
+
+/* Legend */
+.legend-strip{
+  display:flex;align-items:center;gap:16px;
+  padding:12px 20px;
+  border-top:1px solid var(--bd);
+  flex-wrap:wrap;
+}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--t2)}
+.legend-swatch{width:10px;height:10px;border-radius:2px;border:1px solid}
+.swatch-off{background:var(--off-bg);border-color:var(--off-bd)}
+.swatch-on{background:var(--on-bg);border-color:var(--on-bd)}
+
+/* ── FOOTER ── */
+.footer{
+  margin-top:48px;padding-top:18px;
+  border-top:1px solid var(--bd);
+  display:flex;align-items:flex-start;
+  justify-content:space-between;
+  gap:14px;flex-wrap:wrap;
+}
+.footer-note{font-size:12px;color:var(--t2);line-height:1.65}
+.footer-stamp{
+  font-family:var(--mono);font-size:10px;
+  color:var(--t3);padding:3px 9px;
+  border:1px solid var(--bd);border-radius:6px;
+  white-space:nowrap;align-self:flex-start;
+}
+
+/* ── BADGE: back-to-back warning ── */
+.badge-merged{
+  display:inline-block;
+  background:var(--off-bg);border:1px solid var(--off-bd);
+  color:var(--off-t);
+  font-family:var(--mono);font-size:10px;font-weight:600;
+  padding:2px 9px;border-radius:12px;letter-spacing:.04em;
+  margin-bottom:4px;
+}
+
+/* ── SLOT TILE: merged chain indicators ── */
+.slot-tile.merged{border-style:dashed}
+.chain-tag{
+  position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);
+  background:var(--off-t);color:#fff;
+  font-family:var(--mono);font-size:8px;font-weight:700;
+  padding:1px 6px;border-radius:8px;letter-spacing:.04em;white-space:nowrap;
+}
+[data-theme="light"] .chain-tag{color:#fff}
+.chain-tag.end{background:var(--t3)}
+
+/* ── SPLIT BODY: today + upcoming side by side on wide, stacked on mobile ── */
+.card-body-split{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  border-bottom:1px solid var(--bd);
+}
+@media(max-width:560px){
+  .card-body-split{grid-template-columns:1fr}
+}
+.today-slots{
+  padding:18px 20px;
+  border-right:1px solid var(--bd);
+}
+@media(max-width:560px){
+  .today-slots{border-right:none;border-bottom:1px solid var(--bd)}
+}
+.outages-section{padding:18px 20px}
+
+/* ── OUTAGE TIMELINE LIST ── */
+.outage-list{display:flex;flex-direction:column;gap:0}
+.outage-row{
+  display:flex;align-items:flex-start;gap:10px;
+  padding:10px 0;
+  border-bottom:1px solid var(--bd);
+}
+.outage-row:last-child{border-bottom:none}
+.outage-row.is-now{
+  background:var(--off-bg);
+  margin:0 -6px;padding:10px 6px;
+  border-radius:var(--r-sm);
+  border-bottom:none;
+}
+.outage-timeline-col{
+  display:flex;flex-direction:column;
+  align-items:center;
+  padding-top:3px;flex-shrink:0;width:12px;
+}
+.outage-dot{
+  width:10px;height:10px;border-radius:50%;
+  background:var(--bd3);flex-shrink:0;
+}
+.outage-dot.dot-now{
+  background:var(--off-t);
+  box-shadow:0 0 0 3px var(--off-bg);
+}
+.outage-line{
+  width:1px;flex:1;min-height:12px;
+  background:var(--bd2);
+  margin-top:4px;
+}
+.outage-content{flex:1;min-width:0}
+.outage-header{
+  display:flex;align-items:center;
+  justify-content:space-between;gap:8px;
+  margin-bottom:2px;
+}
+.outage-day-label{
+  font-size:12px;font-weight:700;color:var(--t1);
+  display:flex;align-items:center;gap:6px;
+}
+.outage-day-label.is-now{color:var(--off-t)}
+.live-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--off-t);
+  animation:breathe 1.5s ease-in-out infinite;
+  flex-shrink:0;
+}
+.outage-dur-badge{
+  font-family:var(--mono);font-size:10px;font-weight:600;
+  padding:2px 7px;border-radius:10px;
+  background:var(--sf2);border:1px solid var(--bd2);
+  color:var(--t2);white-space:nowrap;flex-shrink:0;
+}
+.outage-dur-badge.long{
+  background:var(--off-bg);border-color:var(--off-bd);
+  color:var(--off-t);
+}
+.outage-desc{
+  font-size:12px;color:var(--t1);font-weight:500;
+  line-height:1.4;
+}
+.outage-restore{
+  font-size:11px;color:var(--t2);margin-top:3px;
+}
+.outage-restore strong{color:var(--t1)}
+.hint-next{font-size:12px;color:var(--t2)}
+.no-outages{font-size:13px;color:var(--t2);padding:8px 0}
+
+/* ── TABLE: merged OFF cells ── */
+.tcell-hrs{
+  display:block;
+  font-family:var(--mono);font-size:9px;
+  color:var(--off-t);opacity:.7;
+  margin-top:1px;
+}
+
+/* ── GROUP LEGEND SECTION ── */
+.groups-section{
+  margin-bottom:32px;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:8px;
+}
+@media(max-width:420px){.groups-section{grid-template-columns:1fr}}
+.group-card{
+  background:var(--sf);border:1px solid var(--bd2);
+  border-radius:var(--r-lg);padding:12px 14px;
+  transition:background var(--tr),border-color var(--tr);
+}
+.group-card-label{
+  font-family:var(--mono);font-size:9px;
+  text-transform:uppercase;letter-spacing:.10em;
+  color:var(--t3);margin-bottom:6px;
+}
+.group-card-name{font-size:13px;font-weight:700;margin-bottom:2px}
+.group-card.A .group-card-name{color:var(--A-t)}
+.group-card.B .group-card-name{color:var(--B-t)}
+.group-card.C .group-card-name{color:var(--C-t)}
+.group-card-desc{font-size:11px;color:var(--t2);line-height:1.5}
+
+/* ── RESPONSIVE ADJUSTMENTS ── */
+@media(max-width:600px){
+  .page{padding:0 14px 56px}
+  .topbar{margin-bottom:28px}
+  .topbar-right{gap:6px}
+  .live-chip{display:none}
+  .hero-title{margin-bottom:8px}
+  .hero-sub{font-size:13px}
+  .answer-card{border-radius:var(--r-lg)}
+  .loc-strip,.next-hero,.today-slots,.outages-section,.week-section{padding-left:16px;padding-right:16px}
+  .next-big{letter-spacing:-.025em}
+  .groups-section{display:none}
+  .alert-banner{padding:10px 13px;font-size:12px}
+}
+@media(max-width:360px){
+  .page{padding:0 12px 48px}
+  .brand-name{font-size:11px}
+  select{font-size:13px}
+}
+
+/* landscape phones */
+@media(max-height:500px) and (orientation:landscape){
+  .hero{margin-bottom:20px}
+  .hero-title{font-size:28px;margin-bottom:6px}
+  .selectors{margin-bottom:16px}
+  .groups-section{display:none}
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--bd3);border-radius:2px}
+</style>
+</head>
+<body>
+<div class="page">
+
+<nav class="topbar">
+  <div class="brand">
+    <div class="brand-pulse"></div>
+    <span class="brand-name">Dumsor Watch</span>
+  </div>
+  <div class="topbar-right">
+    <div class="live-chip"><span id="ld">—</span>&nbsp;&nbsp;<b id="lt">—</b></div>
+    <div class="theme-toggle" onclick="toggleTheme()">
+      <button class="tbtn" id="btn-dark" title="Dark mode">🌙</button>
+      <button class="tbtn" id="btn-light" title="Light mode">☀️</button>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <h1 class="hero-title">When is my<br><em>light going off?</em></h1>
+  <p class="hero-sub">
+    <strong>800MW ECG load management</strong> · Akosombo generation deficit<br>
+    25 Apr – 1 May 2026 · 3-group rotation, 6-hour slots
+  </p>
+</section>
+
+<div class="alert-banner">
+  <span class="alert-icon">⚡</span>
+  <span>Outages rotate through Groups A, B and C every 6 hours. Your area belongs to one fixed group for the full period.</span>
+</div>
+
+<div class="groups-section">
+  <div class="group-card A">
+    <div class="group-card-label">Group</div>
+    <div class="group-card-name">A</div>
+    <div class="group-card-desc">Sat: 12am, 6pm · Pattern repeats every 3 days</div>
+  </div>
+  <div class="group-card B">
+    <div class="group-card-label">Group</div>
+    <div class="group-card-name">B</div>
+    <div class="group-card-desc">Sat: 12pm · 6-hour off, then 18 hours on</div>
+  </div>
+  <div class="group-card C">
+    <div class="group-card-label">Group</div>
+    <div class="group-card-name">C</div>
+    <div class="group-card-desc">Sat: 6am, then 6pm next day</div>
+  </div>
+</div>
+
+<div class="selectors">
+  <div class="field">
+    <label class="field-label" for="sr">Region</label>
+    <select id="sr" onchange="onRegion()">
+      <option value="">— Choose region —</option>
+      <option value="accra">Accra</option>
+      <option value="tema">Tema</option>
+      <option value="ashanti">Ashanti</option>
+      <option value="volta">Volta</option>
+      <option value="eastern">Eastern</option>
+      <option value="western">Western</option>
+      <option value="central">Central</option>
+    </select>
+  </div>
+  <div class="field">
+    <label class="field-label" for="sd">District / Area</label>
+    <select id="sd" onchange="onDistrict()" disabled>
+      <option value="">— Choose district —</option>
+    </select>
+  </div>
+</div>
+
+<div id="answer"></div>
+
+<footer class="footer">
+  <p class="footer-note">Source: ECG 800MW Load Management Timetable, April–May 2026.<br>Data from official schedule. Always verify with ECG for changes.</p>
+  <span class="footer-stamp">Apr 2026</span>
+</footer>
+
+</div>
+
+<script>
+const SCH={
+  0:{s:['A','A','B','C']},  // Sat 25: 12am=A 6am=A 12pm=B 6pm=C
+  1:{s:['A','B','C','A']},  // Sun 26: 12am=A 6am=B 12pm=C 6pm=A
+  2:{s:['B','C','A','B']},  // Mon 27: 12am=B 6am=C 12pm=A 6pm=B
+  3:{s:['C','A','B','C']},  // Tue 28: 12am=C 6am=A 12pm=B 6pm=C
+  4:{s:['A','B','C','A']},  // Wed 29: 12am=A 6am=B 12pm=C 6pm=A
+  5:{s:['B','C','A','B']},  // Thu 30: 12am=B 6am=C 12pm=A 6pm=B
+  6:{s:['C','A','B','C']}   // Fri 01: 12am=C 6am=A 12pm=B 6pm=C
+};
+
+const DAYS=[
+  {l:'Saturday',s:'Sat',d:'25 Apr',iso:'2026-04-25'},
+  {l:'Sunday',s:'Sun',d:'26 Apr',iso:'2026-04-26'},
+  {l:'Monday',s:'Mon',d:'27 Apr',iso:'2026-04-27'},
+  {l:'Tuesday',s:'Tue',d:'28 Apr',iso:'2026-04-28'},
+  {l:'Wednesday',s:'Wed',d:'29 Apr',iso:'2026-04-29'},
+  {l:'Thursday',s:'Thu',d:'30 Apr',iso:'2026-04-30'},
+  {l:'Friday',s:'Fri',d:'1 May',iso:'2026-05-01'}
+];
+
+const SL=['12am – 6am','6am – 12pm','12pm – 6pm','6pm – 12am'];
+const SS=['12am–6am','6am–12pm','12pm–6pm','6pm–12am'];
+const SH=[0,6,12,18];
+const SE=[6,12,18,24]; // slot end hours
+
+const D={
+  accra:[
+    {n:'Abossey Okai & surrounds',g:'B'},{n:'Accra New Town (parts)',g:'A'},
+    {n:'Accra Shopping Mall / Woolworth',g:'A'},{n:'Adabraka',g:'A'},
+    {n:'Adenta Estates / New Legon',g:'A'},{n:'Agbogbloshie',g:'B'},
+    {n:'Airport Residential Area (parts)',g:'A'},{n:'Alajo',g:'C'},
+    {n:'Asylum Down',g:'C'},{n:'Atomic Junction',g:'A'},
+    {n:'Awoshie',g:'A'},{n:'Bawaleshie',g:'A'},
+    {n:'Burma Camp',g:'A'},{n:'Cantonments',g:'B'},
+    {n:'Chorkor',g:'C'},{n:'Dansoman',g:'B'},
+    {n:'Darkuman',g:'A'},{n:'Dome',g:'B'},
+    {n:'East Legon',g:'A'},{n:'East Legon Hills',g:'C'},
+    {n:'Gbawe',g:'C'},{n:'James Town',g:'A'},
+    {n:'Kaneshie',g:'A'},{n:'Kokomlemle (parts)',g:'A'},
+    {n:'Kotobabi',g:'A'},{n:'La / Labadi',g:'A'},
+    {n:'Labone',g:'B'},{n:'Lapaz',g:'A'},
+    {n:'Lartebiokorshie',g:'A'},{n:'Legon',g:'A'},
+    {n:'Madina',g:'A'},{n:'Makola / Tudu',g:'A'},
+    {n:'Mamprobi',g:'B'},{n:'Mamponsee / Pantang',g:'C'},
+    {n:'McCarthy Hill',g:'C'},{n:'Nima',g:'C'},
+    {n:'North Kaneshie',g:'A'},{n:'North Legon',g:'A'},
+    {n:'Nsawam Road',g:'C'},{n:'Odorkor',g:'A'},
+    {n:'Ofankor',g:'A'},{n:'Osu',g:'B'},
+    {n:'Oyarifa',g:'B'},{n:'Pokuase',g:'C'},
+    {n:'Ridge / Airport Hills',g:'C'},{n:'Santamaria',g:'B'},
+    {n:'Sowutuom',g:'A'},{n:'Spintex Road',g:'B'},
+    {n:'Tesano',g:'C'},{n:'Teshie',g:'C'},{n:'Weija',g:'C'}
+  ],
+  tema:[
+    {n:'Ashaiman',g:'B'},{n:'Big Ada / Ada Foah',g:'B'},
+    {n:'Community 2',g:'A'},{n:'Community 3',g:'C'},
+    {n:'Community 4 (OLAM)',g:'C'},{n:'Community 5',g:'A'},
+    {n:'Community 7',g:'A'},{n:'Community 8',g:'B'},
+    {n:'Community 9',g:'C'},{n:'Community 10 (parts)',g:'A'},
+    {n:'Community 11',g:'C'},{n:'Community 12',g:'B'},
+    {n:'Community 17',g:'B'},{n:'Community 19',g:'A'},
+    {n:'Community 22',g:'B'},{n:'Community 25',g:'A'},
+    {n:'Dawhenya / Saglemi',g:'C'},{n:'Dawa / Sege',g:'B'},
+    {n:'Gbetsile',g:'A'},{n:'Juapong / Atimpoku',g:'B'},
+    {n:'Katamanso',g:'B'},{n:'Klagon / Lashibi',g:'C'},
+    {n:'Kpone',g:'A'},{n:'Kpone Affordable Housing',g:'C'},
+    {n:'Marina Mall / Sakumono',g:'A'},{n:'Nungua',g:'A'},
+    {n:'Official Town',g:'B'},{n:'Prampram',g:'B'},
+    {n:'Spintex Junction',g:'C'},{n:'Tema New Town',g:'A'},
+    {n:'Tsopoli / Dawa',g:'B'}
+  ],
+  ashanti:[
+    {n:'Adum / Central Market (parts)',g:'C'},{n:'Agric Amanfrom',g:'B'},
+    {n:'Ahinsan',g:'C'},{n:'Asafo',g:'A'},
+    {n:'Asokore Mampong',g:'A'},{n:'Asokwa',g:'C'},
+    {n:'Ayegya',g:'B'},{n:'Bantama',g:'C'},
+    {n:'Boadi',g:'C'},{n:'Bomso / Ayeduase',g:'B'},
+    {n:'Buokrom',g:'C'},{n:'Cultural Centre / GBC',g:'A'},
+    {n:'Deduako',g:'A'},{n:'Dichemso',g:'B'},
+    {n:'Ejisu / Juaben',g:'A'},{n:'Effiduase',g:'A'},
+    {n:'Fumesua',g:'C'},{n:'Gyinyase / Kotei',g:'C'},
+    {n:'Jachie / Pramso',g:'B'},{n:'Kaasi',g:'B'},
+    {n:'Kentinkrono',g:'B'},{n:'KNUST Campus',g:'A'},
+    {n:'Konongo / Juaso',g:'A'},{n:'Kumawu / Effiduase',g:'A'},
+    {n:'Kwadaso',g:'C'},{n:'Manhyia',g:'B'},
+    {n:'Mampong',g:'A'},{n:'Nsuta / Agona',g:'A'},
+    {n:'Odeneho Kwadaso',g:'B'},{n:'Oforikrom',g:'A'},
+    {n:'Pakyi No. 1 & 2',g:'C'},{n:'Patasi / Aduman',g:'B'},
+    {n:'Santasi',g:'B'},{n:'Suame',g:'A'},
+    {n:'Tafo',g:'B'},{n:'Tanoso',g:'C'}
+  ],
+  volta:[
+    {n:'Aflao / Cross-border Towns',g:'A'},{n:'Agotime / Kpetoe',g:'C'},
+    {n:'Akatsi Township',g:'B'},{n:'Alavanyo / Nkonya Towns',g:'B'},
+    {n:'Anfoeta / Dzolokpuita',g:'A'},{n:'Ave Towns / Klikor',g:'C'},
+    {n:'Aveme / Anfoega',g:'C'},{n:'Bodada / Bowiri Towns',g:'A'},
+    {n:'Dambai / Kpando Todzi',g:'C'},{n:'Dzodze / Kopeyia',g:'C'},
+    {n:'Ho Township (parts)',g:'B'},{n:'Hohoe (parts)',g:'A'},
+    {n:'Kadjebi / Asato',g:'B'},{n:'Keta / Angloga',g:'C'},
+    {n:'Kpando Township',g:'A'},{n:'Kpeve Township',g:'C'},
+    {n:'Logba Towns',g:'A'},{n:'Mafi / Adidome',g:'A'},
+    {n:'Mepe / Battor',g:'A'},{n:'Nkwanta',g:'B'},
+    {n:'Nogokpo / Agbozume',g:'C'},{n:'Oklahoma / Lolobi',g:'B'},
+    {n:'Peki & surrounds',g:'C'},{n:'Sogakope / Dabala',g:'B'},
+    {n:'Tsito Township',g:'B'},{n:'Ve-Golokwati / Fume',g:'A'},
+    {n:'Worawora / Tapa Amanya',g:'A'},{n:'Wli Towns / Gbledi',g:'B'}
+  ],
+  eastern:[
+    {n:'Akim Koforidua / Bantama',g:'B'},{n:'Akim Oda Township',g:'C'},
+    {n:'Akim Tafo Township',g:'A'},{n:'Anyinam / Kwabeng',g:'A'},
+    {n:'Asesewa / Huhunya',g:'A'},{n:'Asikam / Kibi',g:'B'},
+    {n:'Asamankese Township',g:'B'},{n:'Begoro / Osiem',g:'B'},
+    {n:'Boti Falls / Klo Agogo',g:'A'},{n:'Bunso / Adukrom',g:'B'},
+    {n:'Effiduase / Asokore',g:'C'},{n:'Jejeti / Kwahu Nsabah',g:'B'},
+    {n:'Kibi / Nkronso',g:'B'},{n:'Kofigya / Abenabo',g:'C'},
+    {n:'Koforidua (KTU / Capital View)',g:'A'},{n:'Kwabenya / Oyibi',g:'A'},
+    {n:'Kwahu Praso / Dadieso',g:'B'},{n:'Mpraeso / Nkawkaw',g:'C'},
+    {n:'Nkawkaw Township (parts)',g:'C'},{n:'Nsutam / Osino',g:'A'},
+    {n:'Nyankomase / Osenase',g:'C'},{n:'Oda Quarters / Swedru',g:'C'},
+    {n:'Ofoase / Ayerebi',g:'C'},{n:'Osabene / Yaa Botwe',g:'A'},
+    {n:'Suhum Township',g:'C'},{n:'Valley Safari / Nkurakan',g:'A'}
+  ],
+  western:[
+    {n:'Aboadze / Abuesi',g:'A'},{n:'Adamanso / Asikuma',g:'B'},
+    {n:'Agona / Gyeduakese',g:'C'},{n:'Aheinbenso / Akontombra',g:'B'},
+    {n:'Ankwaso / Benchema',g:'A'},{n:'Bogoso Township',g:'B'},
+    {n:'Busua / Dixcove',g:'A'},{n:'Cape 3 Points',g:'A'},
+    {n:'Dadieso / Bonsu Nkwanta',g:'B'},{n:'Diabene / Nkroful',g:'A'},
+    {n:'Fijai / Adiembra',g:'C'},{n:'Ghana Gas / Afuke',g:'B'},
+    {n:'Inchaban / Nyankrom',g:'A'},{n:'Juaboso / Akontombra',g:'C'},
+    {n:'Mankesim / Pewodie',g:'A'},{n:'Mpohor / Breman',g:'C'},
+    {n:'New Atuabo / Cyanide',g:'B'},{n:'Ntankoful / Shama',g:'A'},
+    {n:'Prestea Township',g:'A'},{n:'Takoradi Beach Road',g:'C'},
+    {n:'Wassa Akropong / Saamaang',g:'B'},{n:'Wiawso / Bawdie',g:'B'}
+  ],
+  central:[
+    {n:'Abura Dunkwa',g:'A'},{n:'Agona Brase / Sekyere',g:'B'},
+    {n:'Ankaful Mental / Prisons',g:'B'},{n:'Anomabo Township',g:'A'},
+    {n:'Assin Fosu Township',g:'A'},{n:'Assin North & South',g:'A'},
+    {n:'Cape Coast Central (UCC / Adisadel)',g:'B'},{n:'Dompim / Awuroso',g:'B'},
+    {n:'Edumfa / Asebu',g:'A'},{n:'Elmina Town',g:'B'},
+    {n:'Enyan Denkyira',g:'A'},{n:'Gomoa Fetteh / Breku',g:'C'},
+    {n:'Komenda / Agona',g:'B'},{n:'Mankessim Township',g:'A'},
+    {n:'Manso / Kushia',g:'B'},{n:'Mfantsiman / Saltpond',g:'A'},
+    {n:'Moree / Adukrom',g:'B'},{n:'Nyanyanu / Budunburam',g:'C'},
+    {n:'Opeikuma / Asamoa',g:'C'},{n:'Pedu / Kakumdo',g:'B'},
+    {n:'Saltpond Hospital',g:'A'},{n:'Winneba (parts)',g:'C'}
+  ]
+};
+
+function si(h){return h<6?0:h<12?1:h<18?2:3}
+function di(dt){
+  const s=new Date('2026-04-25T00:00:00');
+  const x=Math.floor((dt-s)/86400000);
+  return(x>=0&&x<=6)?x:-1;
+}
+function fmtH(h){
+  if(h===0||h===24)return'midnight';
+  if(h===12)return'noon';
+  return h<12?h+'am':((h-12)||12)+'pm';
+}
+
+function isOff(day, slot, g){ return SCH[day].s[slot] === g; }
+
+/* Each OFF slot is a separate 6-hour outage — never merge them */
+function buildBlocks(g){
+  const blocks=[];
+  for(let d=0;d<7;d++){
+    for(let s=0;s<4;s++){
+      if(SCH[d].s[s]===g){
+        blocks.push({d, startSlot:s, endSlot:s,
+          startH:SH[s], endH:SE[s], day:DAYS[d]});
+      }
+    }
+  }
+  return blocks;
+}
+
+/* Next upcoming block from now (or current block if inside one) */
+function currentAndNext(g){
+  const now=new Date(),ci=di(now),cs=si(now.getHours());
+  const blocks=buildBlocks(g);
+  let current=null,next=null;
+  for(const b of blocks){
+    const inside=b.d===ci&&b.startSlot<=cs&&cs<=b.endSlot;
+    if(inside){current=b;continue;}
+    if(b.d>ci||(b.d===ci&&b.startSlot>cs)){
+      if(!next)next=b;
+    }
+  }
+  return{current,next,blocks};
+}
+
+function clock(){
+  const n=new Date();
+  const ld=document.getElementById('ld');
+  const lt=document.getElementById('lt');
+  if(ld)ld.textContent=n.toLocaleDateString('en-GH',{weekday:'short',day:'numeric',month:'short'});
+  if(lt)lt.textContent=n.toLocaleTimeString('en-GH',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+}
+clock();setInterval(clock,1000);
+
+function toggleTheme(){
+  const h=document.documentElement;
+  h.setAttribute('data-theme',h.getAttribute('data-theme')==='dark'?'light':'dark');
+  syncBtns();
+}
+function syncBtns(){
+  const dark=document.documentElement.getAttribute('data-theme')==='dark';
+  document.getElementById('btn-dark').classList.toggle('active',dark);
+  document.getElementById('btn-light').classList.toggle('active',!dark);
+}
+syncBtns();
+
+function onRegion(){
+  const r=document.getElementById('sr').value;
+  const s=document.getElementById('sd');
+  s.innerHTML='<option value="">— Choose district —</option>';
+  document.getElementById('answer').style.display='none';
+  if(!r||!D[r]){s.disabled=true;return}
+  [...D[r]].sort((a,b)=>a.n.localeCompare(b.n)).forEach(d=>{
+    const o=document.createElement('option');
+    o.value=d.n;o.dataset.g=d.g;
+    o.textContent=d.n+' · Group '+d.g;
+    s.appendChild(o);
+  });
+  s.disabled=false;
+}
+
+function onDistrict(){
+  const s=document.getElementById('sd');
+  if(!s.value){document.getElementById('answer').style.display='none';return}
+  const g=s.options[s.selectedIndex].dataset.g;
+  const rn=document.getElementById('sr').options[document.getElementById('sr').selectedIndex].text;
+  render(s.value,rn,g);
+}
+
+function blockLabel(b, ci){
+  const today = b.d === ci;
+  const tomorrow = b.d === ci + 1;
+  let when;
+  if(today && b.startH === 0)          when = 'Tonight from midnight';
+  else if(today && b.startH === 6)     when = 'This morning, 6am';
+  else if(today && b.startH === 12)    when = 'This afternoon, noon';
+  else if(today && b.startH === 18)    when = 'This evening, 6pm';
+  else if(tomorrow && b.startH === 0)  when = 'Tomorrow at midnight (dawn)';
+  else if(tomorrow && b.startH === 6)  when = 'Tomorrow morning, 6am';
+  else if(tomorrow && b.startH === 12) when = 'Tomorrow afternoon, noon';
+  else if(tomorrow && b.startH === 18) when = 'Tomorrow evening, 6pm';
+  else when = b.day.l + ', ' + fmtH(b.startH);
+  return { when, restores: fmtH(b.endH) };
+}
+
+function render(district, region, g){
+  const now = new Date(), ci = di(now), cs = si(now.getHours());
+  const { current, next, blocks } = currentAndNext(g);
+
+  /* ── STATUS HERO ── */
+  let hero;
+  if(current){
+    const { restores } = blockLabel(current, ci);
+    const nextLbl = next ? blockLabel(next, ci) : null;
+    hero = `<div class="eyebrow">Right now</div>
+    <div class="next-row">
+      <div>
+        <div class="next-big off">Power is OFF</div>
+        <div class="next-sub">
+          Restores at <strong>${restores}</strong> · 6 hours
+          ${nextLbl ? `<br><span class="hint-next">Next outage: ${nextLbl.when}</span>` : ''}
+        </div>
+      </div>
+      <div class="next-tag">${current.day.s} ${current.day.d}</div>
+    </div>`;
+  } else if(next){
+    const { when, restores } = blockLabel(next, ci);
+    hero = `<div class="eyebrow">Next scheduled outage</div>
+    <div class="next-row">
+      <div>
+        <div class="next-big on">${when}</div>
+        <div class="next-sub">
+          Power off <strong>${fmtH(next.startH)}</strong> → back on <strong>${restores}</strong> · 6 hours
+        </div>
+      </div>
+      <div class="next-tag">${fmtH(next.startH)}–${restores}</div>
+    </div>`;
+  } else {
+    hero = `<div class="eyebrow">Status</div>
+    <div class="next-big on" style="font-size:22px">No further outages</div>
+    <div class="next-sub" style="margin-top:8px">Schedule ends 1 May 2026.</div>`;
+  }
+
+  /* ── TODAY SLOTS ── */
+  let tiles = '';
+  if(ci >= 0){
+    for(let s = 0; s < 4; s++){
+      const off = isOff(ci, s, g), isnow = s === cs;
+      tiles += `<div class="slot-tile ${off?'off':'on'}${isnow?' now':''}">
+        ${isnow ? '<span class="now-tag">Now</span>' : ''}
+        <div class="slot-time">${SS[s]}</div>
+        <div class="slot-state">${off ? 'OFF' : 'On'}</div>
+      </div>`;
+    }
+  }
+
+  /* ── UPCOMING OUTAGES TIMELINE ── */
+  const upcomingBlocks = blocks.filter(b => {
+    if(b.d < ci) return false;
+    if(b.d === ci && b.endSlot < cs) return false;
+    return true;
+  });
+
+  let outageList = '';
+  upcomingBlocks.forEach((b, i) => {
+    const isNow = current && b.d === current.d && b.startSlot === current.startSlot;
+    const { when, restores } = blockLabel(b, ci);
+
+    let slotDesc;
+    if(b.startH === 0)       slotDesc = 'Night — midnight to 6am';
+    else if(b.startH === 6)  slotDesc = 'Morning — 6am to noon';
+    else if(b.startH === 12) slotDesc = 'Afternoon — noon to 6pm';
+    else                     slotDesc = 'Evening — 6pm to midnight';
+
+    const dayHeading = isNow
+      ? `<span class="outage-day-label is-now">Right now <span class="live-dot"></span></span>`
+      : `<span class="outage-day-label">${b.d===ci?'Today':b.d===ci+1?'Tomorrow':b.day.l+' '+b.day.d}</span>`;
+
+    const isLast = i === upcomingBlocks.length - 1;
+    outageList += `<div class="outage-row${isNow?' is-now':''}">
+      <div class="outage-timeline-col">
+        <div class="outage-dot${isNow?' dot-now':''}"></div>
+        ${!isLast ? '<div class="outage-line"></div>' : ''}
+      </div>
+      <div class="outage-content">
+        <div class="outage-header">
+          ${dayHeading}
+          <span class="outage-dur-badge">6h off</span>
+        </div>
+        <div class="outage-desc">${slotDesc}</div>
+        <div class="outage-restore">Power returns: <strong>${restores}</strong></div>
+      </div>
+    </div>`;
+  });
+
+  /* ── WEEK TABLE ── */
+  let rows = '';
+  DAYS.forEach((day, idx) => {
+    const tr = idx === ci;
+    const slots = SCH[idx].s;
+    let cells = '';
+    for(let s = 0; s < 4; s++){
+      const off = slots[s] === g;
+      const isnow = tr && s === cs;
+      cells += `<td class="tcell ${off?'off':'on'}${isnow?' now':''}">
+        <span class="tcell-txt">${off ? 'OFF' : '—'}</span>
+      </td>`;
+    }
+    rows += `<tr class="${tr?'today-row':''}">
+      <td class="day-cell">${day.s}${tr?'<span class="today-badge">Today</span>':''}<small>${day.d}</small></td>${cells}
+    </tr>`;
+  });
+
+  const el = document.getElementById('answer');
+  el.innerHTML = `<div class="answer-card">
+    <div class="loc-strip">
+      <div>
+        <div class="loc-name">${district}</div>
+        <div class="loc-region">${region} Region</div>
+      </div>
+      <span class="grp-pill grp-${g}"><span class="grp-dot"></span>Group ${g}</span>
+    </div>
+
+    <div class="next-hero">${hero}</div>
+
+    <div class="card-body-split">
+      ${ci >= 0 ? `<div class="today-slots">
+        <div class="section-label">Today — ${DAYS[ci].l}, ${DAYS[ci].d}</div>
+        <div class="slots-row">${tiles}</div>
+      </div>` : ''}
+
+      <div class="outages-section">
+        <div class="section-label">Outage schedule — remaining days</div>
+        ${upcomingBlocks.length > 0
+          ? `<div class="outage-list">${outageList}</div>`
+          : `<div class="no-outages">No more outages scheduled.</div>`
+        }
+      </div>
+    </div>
+
+    <div class="week-section">
+      <div class="section-label">Full week &middot; 25 Apr – 1 May</div>
+      <div class="week-scroll"><table>
+        <thead><tr>
+          <th>Day</th>
+          <th>12am–6am</th>
+          <th>6am–12pm</th>
+          <th>12pm–6pm</th>
+          <th>6pm–12am</th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+      </table></div>
+    </div>
+
+    <div class="legend-strip">
+      <div class="legend-item"><div class="legend-swatch swatch-off"></div><span>Power OFF</span></div>
+      <div class="legend-item"><div class="legend-swatch swatch-on"></div><span>Power ON</span></div>
+    </div>
+  </div>`;
+
+  el.style.display = 'block';
+  el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+</script>
+</body>
+</html>
